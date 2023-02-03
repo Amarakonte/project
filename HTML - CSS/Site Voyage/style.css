@@ -1,0 +1,147 @@
+/* GENERAL */
+
+*
+{
+    margin: 0px;
+    padding: 0px;
+}
+
+body{
+    font-size: 15px;
+}
+
+.wrapper
+{
+    min-height: 100vh;
+    width: 940px;
+    margin:0 auto ;
+    padding:0 auto ;
+}
+
+/* HEADER */
+
+header
+{
+    height: 120px;
+}
+
+.header-h1
+{
+    color: grey;
+    font-family: 'Times New Roman', Times, serif;
+    float: left;
+    margin-top: 30px ;
+}
+
+.orange
+{
+    color:orange;
+}
+
+.header-nav
+{
+    float: right;
+    margin-top: 50px;
+
+}
+
+.header-li
+{
+    display: inline;
+    margin-right: 20px;
+    font-family: 'Times New Roman', Times, serif;
+    margin-right: 5px; ;
+}
+
+.header-a
+{
+    text-decoration: none;
+    text-transform: uppercase;
+    color: gray;
+    font-weight: bolder;
+}
+
+#main-image{
+    height: 600px;
+    background: url(image/main.jpg) center;
+}
+
+h2{
+    color: gray;
+    font-size: 55px;
+    font-weight: normal;
+    text-transform: uppercase;
+    text-align: center;
+    padding: 150px 0 40px 0;
+}
+
+.button-1{
+    display: block;
+    width: 120px;
+    height: 50px;
+    background-color: orange;
+    color: white;
+    font-size: 20px;
+    margin: 0 auto;
+    line-height: 50px;
+    text-align: center;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: 0.5s;
+    transform: scale(1);
+}
+
+.button-1:hover{
+    background-color: blue;
+    color: azure;
+    transition: 0.5s;
+    transform: scale(1.5);
+}
+
+h4 {
+    color: gray;
+    font-size: 25px;
+    text-transform: uppercase;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+#steps .wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+#steps {
+    margin: 50px 0;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+#steps .wrapper ul {
+    margin: 0 auto;
+    padding: 0 auto;
+    display: flex;
+    flex-direction: row;
+}
+
+#steps .wrapper ul li {
+    min-height: 100px;
+    width: 270px;
+    display: flex;
+    text-align: center;
+    list-style: none;
+    margin: 40px 10px;
+}
+
+
+
+#steps .wrapper ul li div img {
+    margin: 20px;
+}
+#steps .wrapper ul li div h4 {
+    margin: 20px;
+}
+#steps .wrapper ul li div p {
+    margin: 20px;
+}
