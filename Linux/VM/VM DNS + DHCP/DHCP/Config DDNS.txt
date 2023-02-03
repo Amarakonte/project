@@ -1,0 +1,80 @@
+///// AVANT DE COMMENCER FAUT AVOIR LE DNS + DHCP QUI MARCHE \\\\\
+vim /etc/bind/named.conf.local
+(Ajouter cette ligne aux 2 zones)
+>> allow-update { 127.0.0.1; };
+>> :wq
+mv /etc/bind/amsi.fw.zone /var/cache/bind/
+mv /etc/bind/amsi.rev.zone /var/cache/bind/
+vim /etc/bind/named.conf.local
+(Changer les nouveaux chemins dans le fichier de configuration des zones)
+>> file "/var/cache/bind/amsi.fw.zone";
+>> file "/var/cache/bind/amsi.rev.zone";
+>> :wq
+chown bind:bind /var/cache/bind/amsi.fw.zone
+chown bind:bind /var/cache/bind/amsi.rev.zone
+vim /etc/bind/name.conf.options
+(MODIFIER CETTE LIGNE)
+>> listen-on-v6 { any; };
+>> :wq
+vim /etc/dhcp/dhcpd.conf
+(AJOUTER OU MODIFIER CEES LIGNES)
+ddns-update-style interim;
+ddns-updates on;
+ignore client-updates;
+update-static-leases on;
+allow unknown-clients;
+zone amsi.fr. { primary 127.0.0.1; }
+zone 79.168.192.in-addr.arpa. { primary 127.0.0.1; }
+>> :wq
+
+//// CLEF DE CHIFFREMENT
+Sous debian 11 : dnssec-keygen -a DH -b 128 -T DNSKEY -n USER DDNS_UPDATE
+(Copier la clef de la ligne Prime du fichier "Kdhcp_update.*. Private")
+(je v'ai l'appeler <key>) J'ai copier : mwtYP+Mv1Dgxu0Gqmxq0kw== 
+touch ddns.key
+rndc-confgen > rndc-<key>
+cat rndc-<key>
+cp ddns.key /etc/bind/
+cp ddns.key /etc/dhcp/
+chown root:bind /etc/bind/ddns.key
+chown root:root /etc/dhcp/ddns.key
+chmod 640 /etc/bind/ddns.key
+chmod 640 /etc/dhcp/ddns.key
+vim /etc/bind/named.conf
+(AJOUTER CETTE LIGNE)
+>> include "/etc/bind/ddns.key";
+>> :wq
+vim /etc/bind/named.conf.local
+>> allow-update {127.0.0.1; };
+(Changer en ça)
+>> allow-update {key DDNS_UPDATE; };
+>> :wq
+vim /etc/dhcp/dhcpd.conf
+(AJOUTER CETTE LIGNE)
+>> include "/etc/dhcp/ddns.key";
+(METTRE A JOUR LES ZONES)
+zone amsi.fr. { 
+primary 127.0.0.1; 
+key DDNS_UPDATE;
+}
+zone 79.168.192.in-addr.arpa. { 
+primary 127.0.0.1;
+key DDNS_UPDATE;
+}
+>> :wq
+/etc/init.d/isc-dhcp-server restart
+systemctl restart bind9
+
+Commande utiles lorsque le DDNS sera mis en place :
+rndc status = Vérifier l’état du serveur de nom bind
+rndc flush = Vide tout le cache DNS
+rndc freeze vlne.fr / rndc freeze 1.168.192.in-addr.arpa = Figer une zone et une zone inversée (afin de les modifier)
+vim /var/cache/bind/nom_de_votre_zone.zone (principal et reverse) = Pour modifier vos fichiers zone après avoir freeze les zones
+
+Une fois que vous avez ajouté vos enregistrements manuels, vous devez incrémenter la valeur « Serial » dans les fichiers zone modifié,
+Exemple Serial avant modification de zone : 6 ; Serial
+Exemple Serial après modification de zone : 7 ; Serial
+
+rndc sync -clean = Synchroniser les modifications avant un reload
+rndc reload vlne.fr / rndc reload 1.168.192.in-addr.arpa = Recharger les zones
+rndc thaw vlne.fr / rndc thaw 1.168.192.in-addr.arpa = Réactiver les mises à jour dynamiques

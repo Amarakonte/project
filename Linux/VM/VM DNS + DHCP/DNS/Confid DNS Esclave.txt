@@ -1,0 +1,52 @@
+apt-get install bind9
+apt-get install bind9-doc
+apt-get install bind9utils
+apt-get install resolvconf
+apt-get install dnsutils
+systemctl status bind9
+netstat -lnptu | grep named
+vim /etc/bind/named.conf.local
+( AJOUTER CES LIGNES !)
+// Fichier : /etc/bind/named.conf.local
+// ESCLAVE
+// Do any local configuration here
+//
+// Consider adding the 1918 zones here, if they are not used in your
+// organization
+//include "/etc/bind/zones.rfc1918";
+// zone amsi.fr
+zone "amsi.fr" IN {
+type slave;
+file "/var/cache/bind/amsi.fw.zone";
+masters { 192.168.79.50; };
+};
+// zone inverse amsi.fr
+zone "79.168.192.in-addr.arpa" {
+type slave;
+file "/var/cache/bind/amsi.rev.zone";
+masters { 192.168.79.50; };
+};
+(FIN D'AJOUT)
+vim /etc/network/interfaces
+(FAIRE EXACTEMENT CA)
+source /etc/network/interfaces.d/*
+# The loopback network interface
+auto lo
+iface lo inet loopback
+# The primary network interface
+auto ens33
+iface ens33 inet static
+address 192.168.79.60
+netmask 255.255.255.0
+gateway 192.168.79.2
+dns-domain amsi.fr
+dns-nameservers 192.168.79.50
+dns-nameservers 192.168.79.60
+>> :wq
+systemctl restart networking
+cat /etc/resolv.conf
+systemctl restart bind9
+dig -x 192.168.79.20
+dig srv-glpi-deb01.amsi.fr
+nslookup 192.168.79.20
+nslookup srv-glpi-deb01

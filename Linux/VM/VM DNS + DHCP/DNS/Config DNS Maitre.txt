@@ -1,0 +1,132 @@
+apt-get install bind9
+apt-get install bind9-doc
+apt-get install bind9utils
+apt-get install resolvconf
+apt-get install dnsutils
+systemctl status bind9
+netstat -lnptu | grep named
+rndc status (Ca veut dire "remote name daemon controller")
+vim /etc/bind/named.conf.options
+(Regarder sur la doc car j'ai pas compris)
+dig google.fr
+named-checkconf (Si il ne retourne rien, c’est qu’il n’y a pas d’erreurs vous pouvez continuer.)
+systemctl restart bind9
+(SWITCH SUR LE PC CLIENT !!!)
+mkdir -p /etc/systemd/system/bind9.service.d/
+vim /etc/systemd/system/bind9.service.d/restart.conf
+>> [Service]
+>> Restart=always
+>> RestartSec=5s
+>> :wq
+systemctl daemon-reload
+pkill named
+systemctl status bind9
+vim /etc/bind/named.conf.local
+( AJOUTER CES LIGNES !)
+// Fichier : /etc/bind/named.conf.local
+// SERVEUR MAITRE
+// Do any local configuration here
+//
+// Consider adding the 1918 zones here, if they are not used in your
+// organization
+//include "/etc/bind/zones.rfc1918";
+// zone amsi.fr
+zone "amsi.fr" IN {
+type master;
+file "/etc/bind/amsi.fw.zone";
+notify yes;
+allow-transfer { 192.168.79.60; }; //Adresse IP du serveur Slave
+};
+// zone inverse amsi.fr
+zone "79.168.192.in-addr.arpa" {
+type master;
+file "/etc/bind/amsi.rev.zone";
+notify yes;
+allow-transfer { 192.168.79.60; }; //Adresse IP du serveur Slave
+};
+(FIN D'AJOUT)
+cd /etc/bind/
+touch amsi.fw.zone
+touch amsi.rev.zone
+vim /etc/network/interfaces
+(FAIRE EXACTEMENT CA)
+source /etc/network/interfaces.d/*
+# The loopback network interfaces
+auto lo
+iface lo inet loopback
+# The primary network interface
+auto ens33
+iface ens33 inet static
+address 192.168.79.50
+netmask 255.255.255.0
+gateway 192.168.79.2
+dns-domain amsi.fr
+dns-nameservers 127.0.0.1
+>> :wq
+systemctl restart networking
+cat /etc/resolv.conf
+vim /etc/bind/amsi.fw.zone
+(AJOUTER CES LIGNES !)
+; amsi.fw.zone
+; SERVEUR MAITRE
+; BIND reverse data file for local loopback interface
+;
+$TTL 604800
+@ IN SOA sbind01.amsi.fr. root.amsi.fr. (
+5 ; Serial
+604800 ; Refresh
+86400 ; Retry
+2419200 ; Expire
+604800 ) ; Negative Cache TTL
+; Serveurs DNS
+@ IN NS sbind01.amsi.fr. ; Définition de nos serveurs DNS
+@ IN NS sbind02.amsi.fr.
+@ IN A 192.168.79.50
+@ IN A 192.168.79.60
+;Resolveur DNS
+sbind01 IN A 192.168.79.50
+sbind02 IN A 192.168.79.60
+; Machines dans le domaine
+glpi IN CNAME srv-glpi-deb01
+srv-glpi-deb01 IN A 192.168.79.20 ;Serveur GLPI
+ftp1 IN A 192.168.79.130
+syslog1 IN A 192.168.79.10
+(FIN D'AJOUT)
+vim /etc/bind/amsi.rev.zone
+(AJOUTER CES LIGNES !)
+; amsi.rev.zone
+; SERVEUR MAITRE
+; BIND reverse data file for local loopback interface
+;
+$TTL 604800
+@ IN SOA sbind01.amsi.fr. root.amsi.fr. (
+5 ; Serial
+604800 ; Refresh
+86400 ; Retry
+2419200 ; Expire
+604800 ) ; Negative Cache TTL
+; Serveurs DNS
+@ IN NS sbind01.amsi.fr.
+@ IN NS sbind02.amsi.fr.
+@ IN PTR amsi.fr.
+;Resolveur DNS
+sbind01 IN A 192.168.79.50
+sbind02 IN A 192.168.79.60
+; Machines dans le domaine
+50 IN PTR sbind01.amsi.fr. ; PTR du DNS primaire
+60 IN PTR sbind02.amsi.fr. ; PTR du DNS secondaire
+20 IN PTR srv-glpi-deb01.amsi.fr ;Serveur GLPI
+130 IN PTR ftp1.amsi.fr. ; PTR du FTP
+10 IN PTR syslog1.amsi.fr. ; PTR du Syslog
+(FIN D'AJOUT)
+named-checkconf
+named-checkzone amsi.fr /etc/bind/amsi.fw.zone
+named-checkzone 79.168.192.in-addr.arpa /etc/bind/amsi.rev.zone
+systemctl restart bind9
+journalctl -eu bind9
+(S'il n'y a pas de logs c'est pas normal)
+vim /etc/bind/named.conf
+(AJOUTER CETTE LIGNE)
+acl internals { 127.0.0.0/8; 192.168.79.0/24; };
+>> :wq
+systemctl restart bind9

@@ -1,0 +1,48 @@
+apt install vsftpd
+(Fichier de config : /etc/vsftpd.conf)
+mkdir backup ; cp /etc/vsftpd.conf ~/backup
+vim /etc/vsftpd.conf
+// Vérifier si ces paramètres sont config
+local_enable=YES
+write_enable=YES
+chroot_local_user=YES
+allow_writeable_chroot=YES
+>> :wq
+sytemctl restart vsftpd
+sytemctl status vsftpd
+apt-get install ftp
+ftp [IP] = pour se connecter au server ftp
+amsi
+test
+get test.txt = Transferer du FTP à notre machine
+put test.txt upload.txt = Transferer de notre machine au FTP avec comme nom upload.txt
+bye = pour se deconnecter
+SUR FILEZILA
+-------------------------------------------------------------
+Hôte : [IP]
+Nom user : amsi
+MDP : test
+Port : (pas obligatoire)
+// Je dois créer dans le /home/[USER]
+mkdir ftp
+chmod 755 ftp
+chown root:root ftp
+cd ftp ; mkdir upload
+chmod 755 upload
+vim /etc/vsftpd.conf
+// Ajouter ces lignes
+user_sub_token=$USER
+local_root=/home/$USER/ftp
+userlist_enable=YES
+userlist_file=/etc/vsftpd.userlist
+userlist_deny=NO
+>> :wq
+vim /etc/vsftpd.userlist
+// Ajouter un user dans la liste qu'on a crée
+amsi
+>> :wq
+// Pour vérifer les erreurs 
+/usr/sbin/vsftpd /etc/vsftpd.conf
+>> :qa!
+openssl req -new -x509 -days 365 -nodes -out /etc/ssl/private/vsftpd.cert.pem -keyout /etc/ssl/private/vsftpd.key.pem
+

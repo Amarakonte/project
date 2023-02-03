@@ -1,0 +1,11 @@
+apt-get install syslog-ng
+vim /etc/default/syslog-ng
+>> CONSOLE_LOG_LEVEL=1 (Décommenter)
+>> :wq
+vim /etc/syslog-ng/syslog-ng.conf
+// Ajouter \\
+destination d_logger {udp("[IP Syslog Serv]" port(514)); };
+log { source(s_src); destination(d_logger); };
+>> :wq
+/usr/sbin/syslog-ng  -d -e
+16:51 09/12/202216:51 09/12/2022

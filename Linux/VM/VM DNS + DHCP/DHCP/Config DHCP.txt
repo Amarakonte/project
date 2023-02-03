@@ -1,0 +1,29 @@
+apt-get install isc-dhcp-server
+mkdir backup
+cp /etc/dhcp/dhcpd.conf ~/backup/
+vim /etc/dhcp/dhcpd.conf
+(Modifier)
+option domain-name "amsi.fr";
+log-facility	local7;
+option domain-name-servers 192.168.79.50, 192.168.79.60;
+subnet 192.168.79.0 netmask 255.255.255.0 {
+range 192.168.79.200 192.168.79.220;
+option routers 192.168.79.2;
+option broadcast-address 192.168.79.255;
+host client02 {
+hardware ethernet 00:0c:29:c4:59:c6;
+fixed-address 192.168.79.210;
+}
+}
+>> :wq
+systemctl restart isc-dhcp-server
+ps -eaf | grep -i
+vim /etc/default/isc-dhcp-server 
+(MODIFIER)
+INTERFACESv4="ens33"
+>> :wq
+rm /var/run/dhcpd.pid
+systemctl restart isc-dhcp-server
+systemctl status isc-dhcp-server
+service isc-dhcp-server restart
+(Aller dans le fichier Config DHCP Client)

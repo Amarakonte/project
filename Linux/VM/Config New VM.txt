@@ -1,0 +1,51 @@
+CONFIG SSH
+-----------------------------
+apt-get update
+apt-get install vim open-vm-tools net-tools dnsutils apache2
+>> O
+vim /etc/ssh/sshd_config
+>> PermitRootLogin yes
+>> :wq
+systemctl restart ssh
+systemctl status ssh
+// Connection MobaXterm
+ssh root@192.168.0.1
+// Normalement je réussi a me connecter si je me connecte avec la bonne ip
+CONFIG IP FIXE
+--------------------------------
+vim /etc/network/interfaces
+
+# The primary network interface
+auto ens33
+iface ens33 inet static
+address 192.168.X.X
+netmask 255.255.255.0
+gateway 192.168.X.2
+dns-nameservers 8.8.8.8
+>> :wq
+vim /etc/resolv.conf
+// Je rajoute cette ligne sans toucher au reste
+nameserver 8.8.8.8
+>> :wq
+systemctl restart networking
+ip a
+ping google.fr
+
+CONFIG HOSTNAME
+--------------------------------
+hostnamectl = Pour afficher le nom de la machine
+hostnamectl set-hostname NEW_NOM
+vim /etc/hosts
+Renommé : 127.0.1.1 NOM en 127.0.1.1 NEW_NOM
+>> :wq
+reboot
+
+VIM
+--------------------------------
+3dd = Couper les 3 lignes à partir du curseur
+3yy = Copier les 3 lignes à partir du curseur
+p = coller
+u = Ctrl + Z
+:set nu = Voir numéro des lignes
+:terminal =  Affiche le terminal (exit dans le terminal pour sortir)
+/ =  Rechercher du texte

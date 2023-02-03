@@ -1,0 +1,49 @@
+///// AVANT DE COMMENCER FAUT AVOIR LE DNS + DHCP QUI MARCHE \\\\\
+vim /etc/bind/named.conf.local
+(Ajouter cette ligne aux 2 zones)
+>> allow-update { 127.0.0.1; };
+>> :wq
+mv /etc/bind/amsi.fw.zone /var/cache/bind/
+mv /etc/bind/amsi.rev.zone /var/cache/bind/
+vim /etc/bind/named.conf.local
+(Changer les nouveaux chemins dans le fichier de configuration des zones)
+>> file "/var/cache/bind/amsi.fw.zone";
+>> file "/var/cache/bind/amsi.rev.zone";
+>> :wq
+chown bind:bind /var/cache/bind/amsi.fw.zone
+chown bind:bind /var/cache/bind/amsi.rev.zone
+vim /etc/bind/name.conf.options
+(MODIFIER CETTE LIGNE)
+>> listen-on-v6 { any; };
+>> :wq
+vim /etc/dhcp/dhcpd.conf
+(AJOUTER OU MODIFIER CEES LIGNES et les mettres en première lignes c'est très important sinon ça ne marche pas)
+ddns-update-style interim;
+ddns-updates on;
+ignore client-updates;
+update-static-leases on;
+allow unknown-clients;
+zone amsi.fr. { primary 127.0.0.1; }
+zone 79.168.192.in-addr.arpa. { primary 127.0.0.1; }
+>> :wq
+systemctl stop bind9
+ls /var/cache/bind/
+(Effacer le fichier qui se termine en .jnl pour moi cétait au nom de "managed-keys.bind.jnl")
+rm /var/cache/bind/managed-keys.bind.jnl
+systemctl restart bind9
+
+
+
+Commande utiles lorsque le DDNS sera mis en place :
+rndc status = Vérifier l’état du serveur de nom bind
+rndc flush = Vide tout le cache DNS
+rndc freeze amsi.fr / rndc freeze 79.168.192.in-addr.arpa = Figer une zone et une zone inversée (afin de les modifier)
+vim /var/cache/bind/nom_de_votre_zone.zone (principal et reverse) = Pour modifier vos fichiers zone après avoir freeze les zones
+
+Une fois que vous avez ajouté vos enregistrements manuels, vous devez incrémenter la valeur « Serial » dans les fichiers zone modifié,
+Exemple Serial avant modification de zone : 6 ; Serial
+Exemple Serial après modification de zone : 7 ; Serial
+
+rndc sync -clean = Synchroniser les modifications avant un reload
+rndc reload amsi.fr / rndc reload 79.168.192.in-addr.arpa = Recharger les zones
+rndc thaw amsi.fr / rndc thaw 79.168.192.in-addr.arpa = Réactiver les mises à jour dynamiques

@@ -1,0 +1,10 @@
+vim /etc/network/interfaces
+(Vérifier si cette ligne est bien en dhcp)
+>> auto ens33
+>> iface ens33 inet dhcp
+:wq
+ip a
+(Ancien IP normalement)
+systemctl restart networking
+ip a
+(New IP)

@@ -1,0 +1,61 @@
+https://phelepjeremy.wordpress.com/2017/06/20/configuration-dun-serveur-syslog-ng/#instconfsys
+apt-get install syslog-ng
+(Fichier de config : /etc/syslog-ng/syslog-ng.conf)
+vim /etc/default/syslog-ng
+>> CONSOLE_LOG_LEVEL=1 (Décommenter)
+>> :wq
+/etc/init.d/syslog-ng restart
+update-rc.d -f rsyslog remove
+dpkg -P rsyslog
+vim /etc/syslog-ng/syslog-ng.conf
+(Copier Coller toute les lignes du fichier syslog.txt)
+apt-get install apache2 snmp snmpd -y
+systemctl start apache2
+systemctl enable apache2
+vim /etc/snmp/snmpd.conf
+// Modifier le rocommunity machin en \\
+>> rocommunity public localhost
+>> :wq
+systemctl start snmpd
+systemctl enable snmpd
+apt-get install mrtg -y
+mkdir /var/www/html/mrtg
+cp /etc/mrtg.cfg /etc/mrtg.cfg.ORIGINAL
+vim /etc/mrtg.cfg
+// Changer le WorkDir \\
+>> WorkDir: /var/www/html/mrtg
+>> :wq
+cfgmaker public@localhost > /etc/mrtg.cfg
+indexmaker /etc/mrtg.cfg > /var/www/html/mrtg/index.html
+apt-get install lynx
+lynx http://localhost/mrtg
+vim /etc/apache2/sites-available/mrtg.conf
+// Ajouter ça au nouveau fichier crée \\
+<VirtualHost *:80>
+ServerAdmin admin@yourdomain.com
+DocumentRoot "/var/www/mrtg"
+ServerName yourdomain.com
+<Directory "/var/www/mrtg/">
+Options None
+AllowOverride None
+Order allow,deny
+Allow from all
+Require all granted
+</Directory>
+TransferLog /var/log/apache2/mrtg_access.log
+ErrorLog /var/log/apache2/mrtg_error.log
+</VirtualHost>
+>> :wq
+a2ensite mrtg
+systemctl restart apache2
+(Normalement tu peux ouvrir avec http://yourdomain.com)
+(A partir d'ici ce n'est pas obligatoire je crois)
+//Pour Mettre des Nom DNS à la place de l'IP en local \\
+vim /etc/hosts
+>> 192.168.79.10 SRV-Syslog
+>> :wq
+
+
+apt-get install ffmpeg v4l2loopback-dkms
+modprobe v4l2loopback exclusive_caps=1
+ffmpeg -f flv -listen 1 -i rtmp://[IP]:1935/app/live -fflags nobuffer -f:v mpegts -probesize 8192 -map 0:v -pix_fmt yuv420p -r 20 -f v4l2 /dev/video2

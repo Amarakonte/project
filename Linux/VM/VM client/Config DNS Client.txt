@@ -1,0 +1,14 @@
+vim /etc/resolv.conf
+>> domain amsi.fr.
+>> search amsi.fr.
+>> nameserver 192.168.79.2 (Elle n'est pas obligatoire elle)
+>> nameserver 192.168.79.50
+>> nameserver 192.168.79.60
+>> :wq
+dig A google.fr
+nslookup google.fr
+vim /etc/network/interfaces
+>> dns-nameservers 192.168.79.50
+>> dns-nameservers 192.168.79.60
+>> :wq
+(SWITCH SUR LE SERVEUR DNS)
