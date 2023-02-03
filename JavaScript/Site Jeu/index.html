@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projet JS Ydays</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="toggle" onclick="toggleMenu();"></div>
+
+    <section class="running" id="running">
+        <div class="title white">
+            <h2>Running Man</h2>
+            <p>Regle : vous devez sauter au dessus des boules </p>
+        </div>
+        <div class="content">
+            <div class="jeu">
+                <div class="perso">
+                    <img src="img/man.jpg" alt="">
+                </div>
+                <div class="obstacles" id="obstacles"></div>
+            </div>
+            <div class="control">
+                <button onclick="sauter()">SAUTER</button>
+                <button onclick="start()">START</button>
+            </div>
+        </div>
+        <script src="script/running.js"></script>
+    </section>
+    
+    <section class="bc" id="bc">
+        <div class="title">
+            <h2>Bulls and Cows</h2>
+            <p>Règle : Appuyer sur le bouton "Règles" ci-dessous.<br><span>Durant la partie vous avez 10 essais</span> </p><br>
+        </div>
+        <div class="content">
+            <p id="gameStats">Nbr de parties: 1 | Victoire : 0 | Défaite : 0</p>
+            <input type="number" id="guessInput" min="1111" max="9999" placeholder="ex: 4562" onkeydown="if (event.keyCode === 13) document.getElementById('submitButton').click()">
+            <input type="submit" id="submitButton" value="Guess" onclick="checkGuess()">
+            <input type="submit" id="rulesButton" value="Règles" onclick="printRules()">
+            <input type="submit" id="clearButton" value="Clear" onclick="clearLogs()">
+            <h3>Logs</h3>
+            <textarea name="logs" id="logsArea" cols="60" rows="17" readonly="true"></textarea>
+        </div>
+        <script src="script/bc.js"></script>
+    </section>
+
+    <section class="rps" id="rps">
+        <div class="title white">
+            <h2>Pierre Feuille Ciseaux</h2>
+            <p>Règle : Une fois que les joueurs révèlent leur main (pierre, feuille ou ciseaux) en même temps. La plus forte des formes l'emporte et le joueur marque le point gagnant. Si les deux joueurs utilisent la même forme c'est un match nul.</p><br>
+        </div>
+        <div class="content">
+            <div class="choices">
+              <div id="paper"><img src="img/paper.png" alt="Papier"></div>
+              <div id="rock"><img src="img/rock.png" alt="Caillou"></div>
+              <div id="scissors"><img src="img/scissors.png" alt="Ciseaux"></div>
+            </div>
+            <h3 id="gameStatusRPS">Sélectionner votre arme !</h3>
+            <p id="gameScore">Moi : 0 pts | Ordinateur : 0 pts</p>
+        </div>
+        <script src="script/rps.js"></script>
+    </section>
+
+    <section class="gg" id="gg">
+        <div class="title">
+            <h2>Guessing Game</h2>
+            <p>Règle : Trouver le numéro hasard</p>
+        </div>
+        <div class="content">
+            <button onclick="guessNumber()">Appuyer Ici pour commencer</button>
+        </div>
+        <script src="script/gg.js"></script>
+    </section>
+
+    <section class="morpion" id="morpion">
+        <div class="title white">
+            <h2>Morpion</h2>
+            <p>Règle : Le but du jeu est d’aligner avant son adversaire 3 symboles identiques horizontalement, verticalement ou en diagonale.</p>
+        </div>
+        <div class="content">
+            <div id="gameEnd">
+                <p class="white" id="endGameStatus">...</p>
+                <input type="submit" value="Recommencer" id="reloadGame" onclick="reloadGame()">
+              </div>
+              <div class="board">
+                <div class="cell morpion" data-cell></div>
+                <div class="cell morpion" data-cell></div>
+                <div class="cell morpion" data-cell></div>
+                <div class="cell morpion" data-cell></div>
+                <div class="cell morpion" data-cell></div>
+                <div class="cell morpion" data-cell></div>
+                <div class="cell morpion" data-cell></div>
+                <div class="cell morpion" data-cell></div>
+                <div class="cell morpion" data-cell></div>
+              </div>
+              <h2 id="gameStatus">Le joueur 1 commence !</h2>
+              <script src="script/morpion.js"></script>
+        </div>
+    </section>
+
+    <section class="sudoku" id="sudoku">
+        <div class="title">
+            <h2>Sudoku</h2>
+            <p>Règle : Sudoku est joué sur une grille de 9 x 9 espaces. Dans les lignes et les colonnes sont 9 "carrés" (composé de 3 x 3 espaces). Chaque rangée, colonne et carré (9 espaces chacun) doit être rempli avec les numéros 1-9, sans répéter aucun nombre dans la rangée, la colonne ou le carré.</p>
+        </div>
+        <div class="content">
+            <a href="#" onclick="toggleMenu()"><span>Error Loading App Heroku</span></a>
+            <div id="grid"></div>
+            <p id="mistakes"></p>
+            <div id="selection"></div>
+        </div>
+        <script src="script/sudoku.js"></script>
+    </section>
+    
+    <div class="copyright">
+        <p>Copyright &copy; Amara, Liticia & Mahmoud - 2022-2023 - All Right Reserved</p>
+    </div>
+
+    <div class="sidebar">
+        <ul class="menu">
+            <li><a href="#running" onclick="toggleMenu();">Running Man</a></li>
+            <li><a href="#bc" onclick="toggleMenu();">Bulls and Cows</a></li>
+            <li><a href="#rps" onclick="toggleMenu();">Pierre Feuille Ciseaux</a></li>
+            <li><a href="#gg" onclick="toggleMenu();">Guessing Game</a></li>
+            <li><a href="#morpion" onclick="toggleMenu();">Morpion</a></li>
+            <li><a href="#sudoku" onclick="toggleMenu();">Sudoku</a></li>
+        </ul>
+    </div>
+
+    <!-- Script js pour le CSS que j'ai mis la -->
+    <script>
+        function toggleMenu(){
+            const menuToggle = document.querySelector('.toggle');
+            const sidebar = document.querySelector('.sidebar');
+            menuToggle.classList.toggle('active');
+            sidebar.classList.toggle('active');
+        };
+    </script> 
+</body>
+</html>
