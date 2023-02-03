@@ -1,0 +1,197 @@
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Worldwide KMK's Hangman</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        *{
+            box-sizing: border-box;
+            font-family: 'Montserrat', cursive;
+            outline: none;
+        }
+        body{
+            margin:0;
+            padding: 0;
+            background: #e50733;
+            background-repeat: no-repeat;
+            background-size: contain;
+            display: flex;
+            flex-direction: column;
+            align-self: center;
+            justify-content: center;
+            height: 100%;
+        }
+
+        input[type=submit], button{
+            padding: 10px;
+            background: rgb(11, 180, 11);
+            color: white;
+            border: 0;
+            border-radius: 16px;
+            transition: all 0.5s ease;
+        }
+        input[type=text]+input[type=submit], select+input[type=submit]{
+            border-bottom-left-radius: 0;
+            border-top-left-radius: 0;
+        }
+        input[type=submit]:hover{
+            background: rgb(0, 194, 0);
+        }
+        button{
+            background: goldenrod;
+        }
+        button:hover{
+            background: rgb(228, 164, 2);
+        }
+        input[type=text], select{
+            padding: 10px;
+            border: 0;
+            border-radius: 16px;
+            border-bottom-right-radius: 0;
+            border-top-right-radius: 0;
+        }
+        form{
+            display: flex;
+            flex-wrap: nowrap;
+            flex-direction: row;
+            justify-content: center;
+            align-content: center;
+            align-items: center;
+        }
+    </style>
+</head>
+{{if eq .PartyType "classic"}}
+<body>
+    <img src="https://i.pinimg.com/originals/11/7f/f5/117ff51707c109b253a8d41c6057620f.png" height="100" width="100" style="margin: 0 auto;">
+    <div style="text-align: center; margin-block-start: 21px;">
+        {{if and (.Terminé) (not .Gagné)}}
+            Le mot était {{.Mot_a_trouver}}
+        {{end}}
+        {{if and (.Terminé) (.Gagné)}}
+            Bravo ! Le mot était bien :
+        {{end}}
+    </div>
+    <h1 style="text-align: center; margin-block-start: 0 !important;"><code>{{.Mot_a_trou}}</code></h1>
+    {{if not .Terminé}}
+    <form method="POST" action="/hangman" style="text-align: center;">
+        <input type="text" name="answer" id="inpLtr" required autofocus maxlength="1" autocomplete="off">
+        <input type="submit" for="inpLtr">
+        <input type="hidden" name="mat" value="{{.Mot_a_trouver}}">
+        <input type="hidden" name="fnsh" value="{{.Terminé}}">
+    </form>
+    {{end}}
+    {{if .Terminé}}
+    <form method="POST" style="text-align: center;" action="/restart">
+        <input type="submit" value="Recommencer">
+    </form>
+    {{end}}
+    <div style="text-align: center;">
+        Vous avez gâché {{.PositionPendu}} chance(s) sur 10 <br>
+        Lettres déja essayées : {{.Lettres_essayées}}
+    </div>
+</body>
+{{end}}
+{{if eq .PartyType "levels"}}
+<body>
+{{if ne .Level ""}}
+    <img src="https://i.pinimg.com/originals/11/7f/f5/117ff51707c109b253a8d41c6057620f.png" height="100" width="100" style="margin: 0 auto;">
+    {{if and (.Terminé) (not .Gagné)}}
+    <div style="text-align: center;">
+        Le mot était {{.Mot_a_trouver}}
+    </div>
+    {{end}}
+    {{if and (.Terminé) (.Gagné)}}
+    <div style="text-align: center;">
+        Bravo ! Le mot était bien :
+    </div>    {{end}}
+    <h1 style="text-align: center;"><code>{{.Mot_a_trou}}</code></h1>
+{{end}}
+{{if not .Terminé}}
+    {{if ne .Level ""}}
+    <form method="POST" action="/hangman" style="text-align: center;">
+        <input type="text" name="answer" id="inpLtr" required autofocus maxlength="1" autocomplete="off">
+        <input type="submit" for="inpLtr">
+        <input type="hidden" name="mat" value="{{.Mot_a_trouver}}">
+        <input type="hidden" name="fnsh" value="{{.Terminé}}">
+        <input type="hidden" name="level" value="{{.Level}}">
+    </form>
+    {{end}}
+    <form method="POST" action="/restart" style="text-align: center;">
+        <select name="level" id="words" style="padding: 9px;">
+            <option value="words" {{if eq .Level "words"}}selected{{end}}>Facile</option>
+            <option value="words2" {{if eq .Level "words2"}}selected{{end}}>Confirmé</option>
+            <option value="words3" {{if eq .Level "words3"}}selected{{end}}>Expert</option>
+        </select>
+        <input type="submit" value="{{if ne .Level ""}}Changer de niveau{{end}}{{if eq .Level ""}}Commencer{{end}}">
+    </form>
+{{end}}
+{{if .Terminé}}
+    <form method="POST" style="text-align: center;" action="/restart">
+        <input type="hidden" name="level" value="{{.Level}}">
+        <input type="submit" value="Recommencer">
+    </form>
+    {{end}}
+    {{if ne .Level ""}}
+    <div style="text-align: center;">
+        Vous avez gâché {{.PositionPendu}} chance(s) sur 10 <br>
+        Lettres déja essayées : {{.Lettres_essayées}}
+    </div>
+    {{end}}
+</body>
+{{end}}
+{{if eq .PartyType "login"}}
+<body>
+    <form method="POST" action="/" style="text-align: center;">
+        <input type="text" name="usrnm" id="inpLtr" required autofocus autocomplete="off" placeholder="Tape ton nom et...">
+        <input type="submit" for="inpUsrNm" value="C'est parti !">
+    </form>
+    <div style="text-align: center; margin-block-end: 21px;">
+        <a href="/recup"><button>Reprendre la partie sauvegardée</button></a>
+    </div>
+</body>
+{{end}}
+{{if eq .PartyType "gamify"}}
+<body>
+    <div style="position: fixed;position: fixed;top: 0;right: 0;padding: 20px;">
+        <span style="font-size:larger">{{.UserName}} - <b>{{.Points}} point(s)</b></span><br>
+        Mot trouvé = 10pts<br>Lettre trouvées = 1pt  
+    </div>
+    <img src="https://i.pinimg.com/originals/11/7f/f5/117ff51707c109b253a8d41c6057620f.png" height="100" width="100" style="margin: 0 auto;">
+    <div style="text-align: center; margin-block-start: 21px;">
+        {{if and (.Terminé) (not .Gagné)}}
+            Le mot était {{.Mot_a_trouver}}
+        {{end}}
+        {{if and (.Terminé) (.Gagné)}}
+            Bravo ! Le mot était bien :
+        {{end}}
+    </div>
+    <h1 style="text-align: center; margin-block-start: 0 !important;"><code>{{.Mot_a_trou}}</code></h1>
+    {{if not .Terminé}}
+    <form method="POST" action="/hangman" style="text-align: center;">
+        <input type="text" name="answer" id="inpLtr" required autofocus maxlength="1" autocomplete="off">
+        <input type="submit" for="inpLtr">
+        <input type="hidden" name="mat" value="{{.Mot_a_trouver}}">
+        <input type="hidden" name="fnsh" value="{{.Terminé}}">
+        <input type="hidden" name="usrnm" value="{{.UserName}}">
+        <input type="hidden" name="points" value="{{.Points}}">
+    </form>
+    <div style="text-align: center; margin-block-end: 21px;">
+        <a href="/save"><button>Sauvegarder</button></a>
+    </div>
+    {{end}}
+    {{if .Terminé}}
+    <form method="POST" style="text-align: center;" action="/restart">
+        <input type="hidden" name="usrnm" value="{{.UserName}}">
+        <input type="hidden" name="points" value="{{.Points}}">
+        <input type="submit" value="Recommencer">
+    </form>
+    {{end}}
+    <div style="text-align: center;">
+        Vous avez gâché {{.PositionPendu}} chance(s) sur 10 <br>
+        Lettres déja essayées : {{.Lettres_essayées}}
+    </div>
+</body>
+{{end}}
+</html>

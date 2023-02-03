@@ -1,0 +1,1 @@
+{"Points":1,"UserName":"abruti","PartyType":"gamify","Answer":"","Mot_a_trouver":"couloir","PositionPendu":3,"Lettres_trouvées":"ul","Lettres_essayées":"fem","Mot_a_trou":"_ _ U L _ _ _","Terminé":false,"Gagné":false}
