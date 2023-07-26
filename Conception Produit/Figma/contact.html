@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Contactez-nous</title>
+	<link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+	<header>
+		<nav>
+			<ul>
+				<li><a href="index.html">Accueil</a></li>
+				<li><a href="about.html">À propos</a></li>
+				<li><a href="contact.html">Contact</a></li>
+				<li><a href="shop.html">Boutique</a></li>
+				<li><a href="cart.html">Panier</a></li>
+			</ul>
+		</nav>
+		<h1>Contactez-nous</h1>
+		<p class="header">Remplissez le formulaire ci-dessous pour nous envoyer un message.</p>
+		<img class="left" src="img/logo.png" alt="">
+		<img class="right" src="img/logo.png" alt="">
+	</header>
+
+	<main class="contact">
+		<form>
+			<label for="nom">Nom :</label>
+			<input type="text" id="nom" name="nom" placeholder="Entrez votre nom" required>
+
+			<label for="email">Email :</label>
+			<input type="email" id="email" name="email" placeholder="Entrez votre adresse email" required>
+
+			<label for="sujet">Sujet :</label>
+			<input type="text" id="sujet" name="sujet" placeholder="Entrez le sujet de votre message" required>
+
+			<label for="message">Message :</label>
+			<textarea id="message" name="message" placeholder="Entrez votre message" required></textarea>
+
+			<button type="submit">Envoyer</button>
+		</form>
+
+		<div>
+			<img src="img/contact.jpg">
+
+			<h2 class="information">Adresse</h2>
+			<p class="information">123 Rue de la Paix<br>75008 Paris, France</p>
+
+			<h2>Téléphone</h2>
+			<p>+33 1 23 45 67 89</p>
+
+			<h2>Email</h2>
+			<p>contact@monsite.com</p>
+		</div>
+	</main>
+
+	<footer>
+		<p>Contactez-nous pour plus d'informations sur l'événement.</p>
+	</footer>
+</body>
+</html>

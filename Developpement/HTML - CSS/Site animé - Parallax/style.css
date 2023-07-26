@@ -1,0 +1,79 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'poppins', sans-serif;
+}
+
+body {
+    min-height: 100vh;
+    color: black;
+}
+
+.parallax {
+    position: relative;
+    justify-content: center;
+    display: flex;
+    align-items: center;
+    height: 110vh;
+    background: url('images/background.png') no-repeat;
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+}
+
+.text {
+    position: absolute;
+    font-size: 5em;
+    color: #1b283a;
+    text-shadow: 2px 4px 5px #f9f9f9;
+}
+
+.parallax img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    pointer-events: none;
+}
+
+.parallax img.gate-right {
+    position: fixed;
+    transform: translateX(305px);
+    transition: calc(0.3s);
+}
+
+.parallax img.gate-left {
+    position: fixed;
+    transform: translateX(-282px);
+    transition: calc(0.3s);
+}
+
+.parallax img.tree-right {
+    position: fixed;
+    transition: calc(0.3s);
+}
+
+.parallax img.tree-left {
+    position: fixed;
+    transition: calc(0.9s);
+}
+
+.sec {
+    position: relative;
+    background: #020912;
+    color: aliceblue;
+}
+
+.sec h2 {
+    font-size: 3em;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.sec p {
+    font-size: 1em;
+    font-weight: 300;
+    text-align: justify;
+    padding: 30px 100px;
+}
