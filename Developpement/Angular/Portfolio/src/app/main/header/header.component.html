@@ -1,0 +1,10 @@
+<header class="crash-header">
+  <div class="crash-img-content">
+    <h5 class="logoText">Notre Portfolio</h5>
+  </div>
+  <div class="crash-header-content">
+    <div class="crash-link-container" *ngFor="let link of links">
+      <a [routerLink]="link.path" class="link">{{ link.name }}</a>
+    </div>
+  </div>
+</header>

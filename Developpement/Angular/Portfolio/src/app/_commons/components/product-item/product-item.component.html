@@ -1,0 +1,26 @@
+<div class="norm-product">
+  <div class="norm-product-size">
+    <a routerLinkActive="active" class="norm-container-img">
+      <div
+        routerLink="/products/{{ product.id }}"
+        class="norm-img"
+        style="background-image: url({{ product.img }})"
+      ></div>
+      <div
+        class="norm-preview"
+        style="background-image: url({{ product.previews[0] }})"
+      ></div>
+    </a>
+
+    <div class="norm-info-product">
+      <a class="norm-title-product">
+        <a
+          routerLink="/products/{{ product.id }}"
+          routerLinkActive="active"
+          class="norm-title"
+          >{{ product.name }}</a
+        >
+      </a>
+    </div>
+  </div>
+</div>

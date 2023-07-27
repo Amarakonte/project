@@ -1,0 +1,82 @@
+.norm-product {
+  .norm-product-size {
+    width: 250px;
+    height: 295px;
+
+    .norm-container-img {
+      width: 250px;
+      height: 250px;
+      cursor: pointer;
+
+      .norm-img {
+        width: 250px;
+        height: 250px;
+        background-size: 72%;
+        background-repeat: no-repeat;
+        background-position: center;
+        position: absolute;
+        background-color: #a5e7b2;
+        border-radius: 0.9375rem;
+      }
+
+      .norm-preview {
+        width: 250px;
+        height: 250px;
+        z-index: -1;
+        opacity: 0;
+        background-size: 72%;
+        background-repeat: no-repeat;
+        justify-content: center;
+        align-items: center;
+        position: absolute;
+        background-position: center;
+        transition: 0.5s all;
+        cursor: pointer;
+        background-color: #2fb149;
+        border-radius: 0.9375rem;
+      }
+
+      &:hover .norm-preview {
+        opacity: 1;
+        z-index: 0;
+      }
+    }
+
+    .norm-info-product {
+      width: 250px;
+      height: 280px;
+      position: absolute;
+      display: flex;
+      justify-content: flex-end;
+      flex-direction: column;
+      margin-top: 2.3125rem;
+      z-index: -1;
+
+      .norm-title-product {
+        display: flex;
+        cursor: pointer;
+        position: relative;
+        color: black;
+        z-index: 1;
+
+        .norm-title {
+          text-decoration: none;
+          text-transform: none;
+          color: black;
+          text-transform: uppercase;
+          font-size: 1em;
+        }
+      }
+
+      .norm-price-product {
+        color: black;
+        display: flex;
+        align-items: center;
+      }
+
+      .norm-solde {
+        display: none !important;
+      }
+    }
+  }
+}

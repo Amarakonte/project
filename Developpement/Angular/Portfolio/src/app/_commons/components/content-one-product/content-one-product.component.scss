@@ -1,0 +1,160 @@
+.content-one-product {
+  height: 170em;
+  margin-top: 3.8125rem;
+  width: 100%;
+
+  .norm-product-content {
+    width: 100%;
+    height: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 4.375rem;
+
+    .norm-align-product {
+      width: 90%;
+      max-width: 67.75rem;
+      height: auto;
+      display: flex;
+      justify-content: center;
+
+      .norm-previews-container {
+        display: flex;
+        justify-content: center;
+        width: 80%;
+        height: 20.625rem;
+        justify-content: flex-end;
+        margin-right: 2em;
+
+        .norm-align-previews {
+          display: flex;
+          width: 100%;
+          max-width: 25rem;
+          height: fit-content;
+          flex-direction: column;
+
+          .norm-main-img {
+            width: 100%;
+            max-width: 25rem;
+            height: 20.625rem;
+            background-color: #a5e7b2;
+            border-radius: 0.6875rem;
+            display: flex;
+            background-size: 60%;
+            background-repeat: no-repeat;
+            background-position: center;
+          }
+
+          .norm-sub-imgs {
+            display: flex;
+            width: 100%;
+            height: auto;
+            margin-top: 1.375rem;
+            border-radius: 0.6875rem;
+
+            .norm-secondary-img {
+              width: 100%;
+              max-width: 11.875rem;
+              height: 10.5rem;
+              margin-right: 1.25rem;
+
+              &:last-of-type {
+                margin-right: 0;
+              }
+
+              .norm-img {
+                width: 100%;
+                max-width: 11.875rem;
+                background-color: #a5e7b2;
+                height: 10.5rem;
+                background-size: 60%;
+                background-repeat: no-repeat;
+                background-position: center;
+                border-radius: 0.6875rem;
+              }
+            }
+          }
+        }
+      }
+
+      .norm-info-product {
+        width: 80%;
+        display: flex;
+        justify-content: flex-start;
+        margin-left: 2em;
+        .norm-position-info {
+          display: flex;
+          flex-direction: column;
+          width: 100%;
+          max-width: 25rem;
+          transition: max-width 0.5s ease-in-out;
+          height: auto;
+
+          .norm-title {
+            text-transform: uppercase;
+            font-size: 2rem;
+            height: 1em;
+          }
+
+          .norm-add-to-cart {
+            width: 100%;
+            height: 3.25rem;
+            margin: 1.375rem 0 0 0;
+            border-radius: 0.6875rem;
+            background-color: #2fb149;
+            color: white;
+            font-weight: bold;
+            border: none;
+          }
+
+          .norm-description-container {
+            margin: 2.5rem 0 0 0 !important;
+
+            .norm-description {
+              height: auto;
+              margin: 0;
+              text-align: justify;
+            }
+          }
+
+          .norm-title-recipes-container {
+            margin: 2.1875rem 0 1.875rem 0;
+            width: 100%;
+            height: auto;
+            .norm-title-recipes {
+              margin: 0;
+            }
+          }
+
+          .norm-recipes-container {
+            width: 100%;
+            height: 3.25rem;
+            display: flex;
+
+            .norm-recipes {
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              margin: 0 1.3831rem 0 0;
+              width: 7.4112rem;
+              height: 3.25rem;
+              background-color: #2fb149;
+              border: none;
+              border-radius: 0.6875rem;
+              overflow: hidden;
+
+              &:nth-child(3) {
+                margin: 0 0 0 0;
+              }
+
+              .norm-recipes-content {
+                color: #fff;
+                text-decoration: none;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

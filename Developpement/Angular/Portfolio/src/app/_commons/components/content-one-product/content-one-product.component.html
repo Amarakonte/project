@@ -1,0 +1,56 @@
+<div class="content-one-product">
+  <div class="norm-product-content">
+    <div class="norm-align-product">
+      <div class="norm-previews-container">
+        <div class="norm-align-previews">
+          <div
+            class="norm-main-img"
+            [style.background-image]="
+              product.img
+                ? 'url(' + product.img + ')'
+                : 'url(../../../../assets/vide.jpg)'
+            "
+          ></div>
+          <div class="norm-sub-imgs">
+            <div class="norm-secondary-img">
+              <div class="norm-img"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="norm-info-product">
+        <div class="norm-position-info">
+          <h1 class="norm-title">{{ product.name }}</h1>
+
+          <div class="norm-add-amount">
+            <div class="norm-amount-container"></div>
+          </div>
+        </div>
+
+        <button mat-flat-button class="norm-add-to-cart">
+          AJOUTER AU PANIER
+        </button>
+        <div class="norm-description-container">
+          <p class="norm-description">
+            {{ product.description }}
+          </p>
+        </div>
+        <div class="norm-title-recipes-container">
+          <h1 class="norm-title-recipes">Recettes</h1>
+        </div>
+        <div class="norm-recipes-container">
+          <button mat-flat-button class="norm-recipes">
+            <a href="" class="norm-recipes-content">Flan</a>
+          </button>
+          <button mat-flat-button class="norm-recipes">
+            <a href="" class="norm-recipes-content">Flan</a>
+          </button>
+          <button mat-flat-button class="norm-recipes">
+            <a href="" class="norm-recipes-content">Flan</a>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
