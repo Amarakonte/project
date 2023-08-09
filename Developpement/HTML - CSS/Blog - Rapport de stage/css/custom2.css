@@ -1,0 +1,124 @@
+/* Styles spécifiques pour les personnalisations visuelles */
+
+/* Couleurs */
+body {
+    background-color: #f4f4f4;
+  }
+  
+  header {
+    background-color: #333;
+    color: #fff;
+  }
+  
+  nav a {
+    color: #fff;
+    text-decoration: none;
+  }
+  
+  nav a:hover {
+    text-decoration: underline;
+    color: rgb(2, 167, 211);
+  }
+  
+  article h2 {
+    color: #333;
+  }
+  
+  article p {
+    color: #555;
+  }
+  
+  footer {
+    background-color: #333;
+    color: #fff;
+  }
+  
+  /* Police et Typographie */
+  .blog-title {
+    font-family: 'Arial', sans-serif;
+    font-weight: bold;
+    font-size: 28px;
+  }
+  
+  h1, h2 {
+    font-family: 'Georgia', serif;
+  }
+  
+  /* Espacement et Marge */
+  header, nav, main, footer {
+    padding: 15px;
+  }
+  
+  section.entreprise img {
+    margin: 0 auto; /* Centrer l'image horizontalement */
+    display: block;
+    max-width: 100%;
+  }
+
+  main img {
+    margin: 30px auto; 
+    display: block;
+    max-width: 100%;
+  }
+  
+  .foot {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+  }
+  
+  article {
+    margin: 20px 0;
+    background-color: #fff;
+    padding: 15px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  /* Animation */
+  .hidden {
+    opacity: 0;
+    filter: blur(5px);
+    transform: translateY(20%);
+    transition: all 1s;
+  } 
+
+  @media(prefers-reduced-motion) {
+    .hidden {
+      transition: none;
+    }
+  }
+
+  .show {
+    opacity: 1;
+    filter: blur(0);
+    transform: translateY(0);
+  }
+  nav a {
+    transition: color 0.3s;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    nav ul {
+      flex-direction: column;
+    }
+  
+    nav li {
+      margin: 5px 0;
+    }
+  
+    section.entreprise img {
+      margin: 20px auto;
+    }
+
+    .foot {
+      position: relative;
+      width: auto;
+    }
+
+    main img {
+      margin: 20px auto;
+    }
+  }
+  

@@ -1,0 +1,147 @@
+/* Style de base */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-image: url("../img/Background.jpg");
+    /* background-color: rgb(2, 167, 211); */
+  }
+
+  .blog-title {
+    text-align: center;
+  }
+  
+  span {
+    color: white;
+    text-decoration: underline;
+  }
+
+  .white {
+    color: #ffffff;
+  }
+
+  .white:hover {
+    color: #ff0000;
+  }
+  
+  header, nav, main, footer {
+    padding: 20px;
+  }
+  
+  header {
+    background-color: rgb(0, 73, 141);
+    color: #fff;
+  }
+
+  nav ul {
+    display: flex;
+    justify-content: space-around;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+  }
+  
+  nav li {
+    display: inline;
+    margin-right: 10px;
+  }
+  
+  section.entreprise {
+    margin-top: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+  }
+
+  section.entreprise img {
+    margin: 0 900px;
+  }
+
+  section.presentation {
+    margin-top: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+  }
+  section.presentation img {
+    min-width: 99%;
+  }
+
+  article h2 {
+    color: #333;
+  }
+  
+  article p {
+    color: #666;
+  }
+  
+  article {
+    margin-bottom: 20px;
+    background-color: #f9f9f9;
+    padding: 20px;
+  }
+
+  #no-results-message {
+    display: none;
+    color: #ff0000;
+    text-align: center;
+    margin-top: 10px;
+  }
+  
+  .btn {
+    height: 100px;
+    width: 100px;
+    background: #02a7d3;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: sticky;
+    left: 90%;
+    bottom: 20px;
+    cursor: pointer;
+    opacity: 0.2;
+    transition: all 1s;
+    border: none;
+  }
+
+  .btn:hover {
+    opacity: 1;
+    transition: all 1s;
+    border: #f9f9f9 solid 1px;
+  }
+
+  .icone {
+    width: 50px;
+  }
+  
+  footer {
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+  }
+
+  .thanks {
+    margin-top: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+  }
+
+  h2.thanks {
+    margin: 40px auto;
+  }
+  
+  .center {
+    margin: 0 900px;
+  }
+
+  main img {
+    margin: 30px auto;
+  }
