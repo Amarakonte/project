@@ -103,5 +103,9 @@ body {
     section.entreprise img {
       margin: 20px auto;
     }
+
+    .mobile {
+      display: flex;
+    }
   }
   

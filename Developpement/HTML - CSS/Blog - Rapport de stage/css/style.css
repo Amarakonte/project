@@ -109,6 +109,10 @@ body {
     border: none;
   }
 
+  .mobile {
+    display: none;
+  }
+
   .btn:hover {
     opacity: 1;
     transition: all 1s;
