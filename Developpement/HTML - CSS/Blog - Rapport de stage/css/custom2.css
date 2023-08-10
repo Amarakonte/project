@@ -61,12 +61,6 @@ body {
     max-width: 100%;
   }
   
-  .foot {
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-  }
-  
   article {
     margin: 20px 0;
     background-color: #fff;
@@ -110,11 +104,6 @@ body {
   
     section.entreprise img {
       margin: 20px auto;
-    }
-
-    .foot {
-      position: relative;
-      width: auto;
     }
 
     main img {
