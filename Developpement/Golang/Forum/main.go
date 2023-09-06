@@ -5,6 +5,7 @@ import (
 	cookie "challenge48-equipe16/app/cookies"
 	"fmt"
 	"net/http"
+	"os"
 	"text/template"
 )
 
@@ -15,6 +16,7 @@ func main() {
 
 	config.CreateDB()
 	db := config.GetDB()
+	defer db.CloseDB() // Assurez-vous que la connexion se ferme lorsque la fonction main() se termine
 
 	db.CreateRoleTable()
 	db.CreateUserTable()
@@ -33,7 +35,14 @@ func main() {
 	http.HandleFunc("/login", login)
 	http.HandleFunc("/logout", logout)
 
-	err := http.ListenAndServe(":8000", nil)
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "8000" // Port par défaut si la variable d'environnement PORT n'est pas définie
+	}
+
+	// Initialisez votre application et vos routes ici
+
+	err := http.ListenAndServe(":"+port, nil)
 	if err != nil {
 		panic(err)
 	}

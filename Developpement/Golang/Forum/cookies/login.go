@@ -9,6 +9,7 @@ func SearchUserToLog(data_logIn map[string]interface{}, user_login string, passw
 	var create_cookie = false
 
 	db := config.GetDB()
+	defer db.CloseDB() // Assurez-vous que la connexion se ferme lorsque la fonction main() se termine
 
 	// Parcourir la BDD
 	rows, err := db.Database.Query("SELECT username, password FROM user")

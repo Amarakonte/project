@@ -7,7 +7,7 @@ import (
 )
 
 func CreateDB() {
-	db, err := sql.Open("mysql", (userDB + "@tcp(" + ip + ":" + port + ")/"))
+	db, err := sql.Open("mysql", (userDB + "@tcp(" + ip + ":" + port + ")/challenge48h"))
 	if err != nil {
 		panic(err)
 	}

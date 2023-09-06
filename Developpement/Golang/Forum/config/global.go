@@ -1,9 +1,13 @@
 package config
 
-import "database/sql"
+import (
+	"database/sql"
+
+	_ "github.com/go-sql-driver/mysql"
+)
 
 var userDB = "root"
-var ip = "10.0.0.4"
+var ip = "localhost" // "mysql-container" ou "localhost"
 var port = "3306"
 
 type Event struct {
@@ -53,4 +57,11 @@ func GetDB() db {
 	databases.Database, _ = sql.Open("mysql", (userDB + "@tcp(" + ip + ":" + port + ")/challenge48h"))
 
 	return databases
+}
+
+// Fermez la connexion à la base de données lorsque vous n'en avez plus besoin
+func (d *db) CloseDB() {
+	if d.Database != nil {
+		d.Database.Close()
+	}
 }
