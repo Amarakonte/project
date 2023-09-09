@@ -8,6 +8,7 @@ import (
 	"net/http"
 	"os"
 	"strconv"
+	"strings"
 	"text/template"
 	"time"
 )
@@ -166,16 +167,19 @@ func Selection_Mot(file string) string {
 	b1 := make([]byte, 9999)
 	n1, _ := f.Read(b1)
 
-	var words [][]byte
+	var words []string
 	index := 0
 	for indice, lettre := range string(b1[:n1]) {
 		if lettre == 10 {
-			words = append(words, b1[index:indice])
+			word := strings.TrimSpace(string(b1[index:indice]))
+			if word != "" {
+				words = append(words, word)
+			}
 			index = indice + 1
 		}
 	}
 	//- 1.3 : Selection aléatoire
-	mot_au_hasard := string(words[r1.Intn(len(words))])
+	mot_au_hasard := words[r1.Intn(len(words))]
 	defer f.Close()
 	return mot_au_hasard
 }

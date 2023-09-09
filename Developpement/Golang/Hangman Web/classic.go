@@ -9,6 +9,7 @@ import (
 	"net/http"
 	"os"
 	"strconv"
+	"strings"
 	"text/template"
 	"time"
 )
@@ -42,6 +43,7 @@ func main() {
 
 	//1: on injecte les informations dans la page, à défaut de redemarrer une partie lorsque la précédente terminée (cf. la condition)
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		// http.ServeFile(w, r, "index.html")
 		if position_pendu == 10 || Toutes_Les_Lettres_Sont_Dans_Le_Mot(lettres_validées, mot_au_hasard) {
 			http.Redirect(w, r, "/restart", http.StatusSeeOther)
 			return
@@ -104,6 +106,13 @@ func main() {
 
 	//Cette fonction sert à écouter (Listen) le port indiqué et en cas d'erreur nulle, à activer un serveur local pour pouvoir tester notre application
 	http.ListenAndServe(":8080", nil)
+
+	// port := "8080" // Port sur lequel votre serveur écoutera
+	// fmt.Printf("Listening on port %s...\n", port)
+	// err := http.ListenAndServe(":"+port, nil)
+	// if err != nil {
+	// 	fmt.Printf("Error: %s\n", err)
+	// }
 }
 
 /*Ci-dessous des fonctions utiles au fonctionnement du hangman. Leur fonction est explicitée par leur nom*/
@@ -116,16 +125,19 @@ func Selection_Mot(file string) string {
 	b1 := make([]byte, 9999)
 	n1, _ := f.Read(b1)
 
-	var words [][]byte
+	var words []string
 	index := 0
 	for indice, lettre := range string(b1[:n1]) {
 		if lettre == 10 {
-			words = append(words, b1[index:indice])
+			word := strings.TrimSpace(string(b1[index:indice]))
+			if word != "" {
+				words = append(words, word)
+			}
 			index = indice + 1
 		}
 	}
 	//- 1.3 : Selection aléatoire
-	mot_au_hasard := string(words[r1.Intn(len(words))])
+	mot_au_hasard := words[r1.Intn(len(words))]
 	defer f.Close()
 	return mot_au_hasard
 }
