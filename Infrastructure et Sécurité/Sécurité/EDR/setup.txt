@@ -1,0 +1,12 @@
+Programmer en Python 3.11.2
+Version non totalement achevee
+
+Environnement : Debian et ses distributions derivees (Ubuntu, KaliLinux,...)
+
+Preparation :
+ - Mettre a jour la liste des paquets : sudo apt update
+ - Installer "Python" : sudo apt install python3
+ - Installer "watchdog" : sudo apt install python3-watchdog
+ - Installer "tkinter" : sudo apt install python3-tk
+
+Lancement : python3 filefox-release-1.8.py
